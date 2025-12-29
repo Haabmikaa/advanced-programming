@@ -1,0 +1,46 @@
+package com.quizapp.util;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.Properties;
+import java.io.InputStream;
+
+public class DBConnection {
+    private static Properties properties = new Properties();
+    
+    static {
+        try {
+            // Step 1: Register the driver class
+            InputStream input = DBConnection.class.getClassLoader()
+                .getResourceAsStream("database.properties");
+            if (input != null) {
+                properties.load(input);
+                Class.forName(properties.getProperty("db.driver"));
+            }
+        } catch (Exception e) {
+            System.err.println("Error registering JDBC driver: " + e.getMessage());
+        }
+    }
+    
+    // Step 2: Creating a connection
+    public static Connection getConnection() throws SQLException {
+        String url = properties.getProperty("db.url");
+        String username = properties.getProperty("db.username");
+        String password = properties.getProperty("db.password");
+        
+        // Return a new connection object every time
+        return DriverManager.getConnection(url, username, password);
+    }
+    
+    // Step 5: Closing a connection (handled by DAOs using close() or try-with-resources)
+    public static void closeConnection(Connection con) {
+        try {
+            if (con != null && !con.isClosed()) {
+                con.close();
+            }
+        } catch (SQLException e) {
+            System.err.println("Error closing connection: " + e.getMessage());
+        }
+    }
+}
