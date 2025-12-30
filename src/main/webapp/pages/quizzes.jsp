@@ -336,7 +336,14 @@
                     <div class="quiz-footer">
                         <span>🎯 Passing: 70%</span>
                         <div>
-                            <button class="btn-quiz btn-outline quiz-details-btn" data-quiz-id="<%= quiz.getQuizId() %>" type="button">Details</button>
+                            <button class="btn-quiz btn-outline quiz-details-btn" 
+                                    data-quiz-id="<%= quiz.getQuizId() %>" 
+                                    data-title="<%= quiz.getTitle() %>"
+                                    data-desc="<%= quiz.getDescription() %>"
+                                    data-duration="<%= quiz.getDurationMinutes() %>"
+                                    data-difficulty="<%= quiz.getDifficulty() %>"
+                                    data-questions="10" 
+                                    type="button">Details</button>
                             <a href="${pageContext.request.contextPath}/quiz?action=take&id=<%= quiz.getQuizId() %>" 
                                class="btn-quiz btn-primary">Take Quiz</a>
                         </div>
@@ -425,11 +432,61 @@
                 emptyState.style.display = visibleCards.length === 0 ? 'block' : 'none';
             }
         }
+
+        // Modal Logic
+        const modal = document.getElementById('quizDetailsModal');
+        const modalContent = document.getElementById('quizDetailsContent');
+        const closeModal = document.getElementById('closeQuizDetailsModal');
+
+        document.querySelectorAll('.quiz-details-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = btn.getAttribute('data-quiz-id');
+                const title = btn.getAttribute('data-title');
+                const desc = btn.getAttribute('data-desc');
+                const duration = btn.getAttribute('data-duration');
+                const difficulty = btn.getAttribute('data-difficulty');
+                const questions = btn.getAttribute('data-questions');
+
+                modalContent.innerHTML = 
+                    '<h2 style="margin-top:0; color:var(--gold); font-size:24px; margin-bottom:10px;">' + title + '</h2>' +
+                    '<p style="color:#aaa; font-size:14px; line-height:1.5; margin-bottom:25px;">' + desc + '</p>' +
+                    '<div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:20px;">' +
+                        '<div style="background:#242424; padding:20px; border-radius:12px; border:1px solid #333;">' +
+                            '<div style="font-size:14px; color:#888; margin-bottom:8px;">Duration</div>' +
+                            '<div style="font-size:24px; font-weight:700; color:#fff;">' + duration + ' min</div>' +
+                        '</div>' +
+                        '<div style="background:#242424; padding:20px; border-radius:12px; border:1px solid #333;">' +
+                            '<div style="font-size:14px; color:#888; margin-bottom:8px;">Difficulty</div>' +
+                            '<div style="font-size:24px; font-weight:700; color:#fff;">' + difficulty + '</div>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div style="display:grid; grid-template-columns:1fr; margin-bottom:30px;">' +
+                        '<div style="background:#242424; padding:20px; border-radius:12px; border:1px solid #333; width:calc(50% - 10px);">' +
+                            '<div style="font-size:14px; color:#888; margin-bottom:8px;">Questions</div>' +
+                            '<div style="font-size:24px; font-weight:700; color:#fff;">' + questions + ' Qs</div>' +
+                        '</div>' +
+                    '</div>' +
+                    '<a href="${pageContext.request.contextPath}/quiz?action=take&id=' + id + '" ' +
+                       'style="display:block; width:100%; padding:20px; background:var(--gold); color:var(--black); ' +
+                       'text-align:center; text-decoration:none; font-weight:800; border-radius:12px; ' +
+                       'font-size:18px; text-transform:uppercase; letter-spacing:1px;">START QUIZ NOW</a>';
+                
+                modal.style.display = 'flex';
+            });
+        });
+
+        closeModal.onclick = () => modal.style.display = 'none';
+        window.onclick = (e) => { if (e.target == modal) modal.style.display = 'none'; };
     </script>
 <!-- Quiz Details Modal -->
 <div id="quizDetailsModal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.85); z-index:10000; align-items:center; justify-content:center;">
-  <div style="background:var(--card-bg); border: 1px solid var(--border); border-radius:12px; max-width:520px; width:90vw; padding:32px 24px; box-shadow:var(--shadow); position:relative; color: var(--white);">
-    <button id="closeQuizDetailsModal" style="position:absolute;top:12px;right:18px;font-size:24px;border:none; background:none; cursor:pointer; color: var(--gold);">×</button>
+  <div style="background:#1a1a1a; border: 1px solid var(--gold); border-radius:16px; max-width:550px; width:90vw; padding:40px 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); position:relative; color: var(--white);">
+    
+    <!-- Top Handle/Pill -->
+    <div style="width:40px; height:4px; background:var(--gold); border-radius:10px; margin: 0 auto 30px auto; opacity: 0.6;"></div>
+    
+    <button id="closeQuizDetailsModal" style="position:absolute;top:15px;right:20px;font-size:28px;border:none; background:none; cursor:pointer; color: var(--gold); line-height:1;">×</button>
+    
     <div id="quizDetailsContent">
       <!-- Populated by JS -->
       <div style="text-align:center;"><em>Loading...</em></div>

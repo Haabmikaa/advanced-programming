@@ -43,8 +43,18 @@
         <servlet-name>AdminServlet</servlet-name>
         <servlet-class>com.quizapp.servlets.AdminServlet</servlet-class>
     </servlet>
-    
+
+    <servlet>
+        <servlet-name>AdminUserServlet</servlet-name>
+        <servlet-class>com.quizapp.servlets.AdminUserServlet</servlet-class>
+    </servlet>
+
     <!-- Servlet Mappings -->
+    <servlet-mapping>
+        <servlet-name>AdminUserServlet</servlet-name>
+        <url-pattern>/manageUser</url-pattern>
+    </servlet-mapping>
+
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>

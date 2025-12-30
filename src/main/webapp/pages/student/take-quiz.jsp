@@ -88,7 +88,8 @@
         .timer {
             position: fixed;
             top: 30px;
-            right: 30px;
+            left: 50%;
+            transform: translateX(-50%);
             background: var(--gold);
             color: var(--black);
             padding: 18px 30px;
@@ -474,7 +475,7 @@
         function updateTimer() {
             const minutes = Math.floor(totalSeconds / 60);
             const seconds = totalSeconds % 60;
-            timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            timerElement.textContent = minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0');
             
             if (totalSeconds <= 0) {
                 clearInterval(timerInterval);

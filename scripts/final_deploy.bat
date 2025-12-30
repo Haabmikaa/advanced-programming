@@ -23,7 +23,7 @@ if %errorlevel% neq 0 (
 
 echo.
 echo Step 3: Deploying to Tomcat...
-set TOMCAT_HOME=C:\apache-tomcat-9.0.85
+set TOMCAT_HOME=C:\apache-tomcat-9.0.113
 set WAR_FILE=target\QuizWebApp.war
 
 if exist "%TOMCAT_HOME%\webapps\QuizWebApp.war" (
@@ -61,7 +61,7 @@ timeout /t 5 /nobreak >nul
 
 echo.
 echo Step 8: Running Integration Tests...
-java -cp "target/classes;C:\Users\%USERNAME%\.m2\repository\mysql\mysql-connector-java\8.0.28\mysql-connector-java-8.0.28.jar;C:\Users\%USERNAME%\.m2\repository\com\google\code\gson\gson\2.9.0\gson-2.9.0.jar;C:\Users\%USERNAME%\.m2\repository\org\apache\commons\commons-dbcp2\2.9.0\commons-dbcp2-2.9.0.jar" com.quizapp.test.IntegrationTest
+java -cp "target/classes;C:\Users\%USERNAME%\.m2\repository\mysql\mysql-connector-java\8.0.28\mysql-connector-java-8.0.28.jar;C:\Users\%USERNAME%\.m2\repository\com\google\code\gson\gson\2.9.0\gson-2.9.0.jar;C:\Users\%USERNAME%\.m2\repository\org\apache\commons\commons-dbcp2\2.9.0\commons-dbcp2-2.9.0.jar;C:\Users\%USERNAME%\.m2\repository\org\apache\commons\commons-pool2\2.11.1\commons-pool2-2.11.1.jar" com.quizapp.test.IntegrationTest
 
 echo.
 echo ========================================
@@ -80,7 +80,7 @@ echo   Admin: admin / admin123
 echo.
 echo 🛠️ SERVICES RUNNING:
 echo   - Apache Tomcat (Web Server)
-echo   - RMI Registry & Server
+echo   - RMI Registry ^& Server
 echo   - Socket Server
 echo   - MySQL Database
 echo.

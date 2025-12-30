@@ -5,7 +5,7 @@ echo ========================================
 echo.
 
 echo Stopping Tomcat...
-call "C:\apache-tomcat-9.0.85\bin\shutdown.bat" >nul 2>&1
+call "C:\apache-tomcat-9.0.113\bin\shutdown.bat" >nul 2>&1
 
 echo Stopping RMI and Socket servers...
 taskkill /F /FI "WINDOWTITLE eq RMI Server" >nul 2>&1

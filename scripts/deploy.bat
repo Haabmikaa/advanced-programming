@@ -10,7 +10,7 @@ title Quiz Web App Deployment
 
 REM Set variables
 set "PROJECT_ROOT=%~dp0.."
-set "TOMCAT_HOME=C:\apache-tomcat-9.0.85"
+set "TOMCAT_HOME=C:\apache-tomcat-9.0.113"
 set "MYSQL_HOME=C:\Program Files\MySQL\MySQL Server 8.0"
 set "JAVA_HOME=C:\Program Files\Java\jdk-17"
 set "WAR_FILE=target\QuizWebApp.war"

@@ -421,9 +421,14 @@
 </div>
 
 <script>
+    // Admin Dashboard Logic v2.1
+    console.log('Admin Dashboard JS v2.1 Loaded');
+
     const modal = document.getElementById('userModal');
     const userForm = document.getElementById('userForm');
-    const contextPath = '${pageContext.request.contextPath}';
+    
+    // HARDCODED API URL to prevent context path issues
+    const API_URL = '/QuizWebApp/manageUser';
 
     function showAddUserModal() {
         document.getElementById('modalTitle').textContent = 'Add New User';
@@ -450,26 +455,36 @@
     }
 
     async function deleteUser(id, name) {
-        if (confirm(`Are you sure you want to delete user ${name}?`)) {
+        if (confirm('Are you sure you want to delete user ' + name + '? This action cannot be undone.')) {
             try {
-                // Fixed URL and added proper error handling
-                const response = await fetch(`${contextPath}/admin/user?action=delete&id=${id}`, {
+                const url = API_URL + '?action=delete&id=' + id + '&t=' + new Date().getTime();
+                console.log("Sending delete request to:", url);
+                
+                const response = await fetch(url, {
                     method: 'POST'
                 });
                 
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                console.log("Delete response status:", response.status);
+                const responseText = await response.text();
+                console.log("Delete response text:", responseText);
+
+                let result;
+                try {
+                    result = JSON.parse(responseText);
+                } catch (e) {
+                    console.error("Failed to parse delete JSON:", e);
+                    alert('Server Error (' + response.status + '): The server returned an invalid response. See console for details.');
+                    return;
                 }
                 
-                const result = await response.json();
                 if (result.success) {
                     location.reload();
                 } else {
-                    alert('Error: ' + (result.error || 'Could not delete user. They may have related data in the system.'));
+                    alert('Error: ' + (result.error || 'Could not delete user.'));
                 }
             } catch (err) {
                 console.error('Delete failed:', err);
-                alert('An error occurred while trying to delete the user. Please try again.');
+                alert('Connection Error: ' + err.message);
             }
         }
     }
@@ -486,17 +501,29 @@
         };
         
         try {
-            const response = await fetch(`${contextPath}/admin/user?action=save`, {
+            const url = API_URL + '?action=save&t=' + new Date().getTime();
+            console.log("Sending save request to:", url);
+            console.log("Payload:", formData);
+
+            const response = await fetch(url, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
             });
             
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+            console.log("Response status:", response.status);
+            const responseText = await response.text();
+            console.log("Response text:", responseText);
+
+            let result;
+            try {
+                result = JSON.parse(responseText);
+            } catch (e) {
+                console.error("Failed to parse JSON:", e);
+                alert('Server Error (' + response.status + '): The server did not return a valid JSON response. See console for details.');
+                return;
             }
             
-            const result = await response.json();
             if (result.success) {
                 location.reload();
             } else {
@@ -504,7 +531,7 @@
             }
         } catch (err) {
             console.error('Save failed:', err);
-            alert('Failed to save user. Check console for details.');
+            alert('Connection Error: ' + err.message + '. Ensure the server is running.');
         }
     };
 

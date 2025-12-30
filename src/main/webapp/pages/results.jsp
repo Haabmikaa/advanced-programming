@@ -518,10 +518,8 @@
                 const bar = document.createElement('div');
                 bar.className = 'chart-bar';
                 bar.style.height = barHeight + '%';
-                bar.innerHTML = `
-                    <div class="chart-value">${data.score}%</div>
-                    <div class="chart-label">${data.quiz}</div>
-                `;
+                bar.innerHTML = '<div class="chart-value">' + data.score + '%</div>' +
+                             '<div class="chart-label">' + data.quiz + '</div>';
                 
                 chartContainer.appendChild(bar);
             });
