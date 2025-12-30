@@ -19,63 +19,70 @@ public class RegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // --- Get form inputs ---
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String confirmPassword = request.getParameter("confirmPassword");
-        String email = request.getParameter("email");
-        String fullName = request.getParameter("fullName");
-        String roleParam = request.getParameter("role");
-
-        // --- Server-side validation (extra safety) ---
-        if (username == null || password == null || confirmPassword == null ||
-            email == null || fullName == null || roleParam == null ||
-            username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() ||
-            email.isEmpty() || fullName.isEmpty() || roleParam.isEmpty()) {
-
-            request.setAttribute("error", "All fields are required!");
-            request.getRequestDispatcher("/pages/register.jsp").forward(request, response);
-            return;
-        }
-
-        if (!password.equals(confirmPassword)) {
-            request.setAttribute("error", "Passwords do not match!");
-            request.getRequestDispatcher("/pages/register.jsp").forward(request, response);
-            return;
-        }
-
-        UserDAO userDAO = new UserDAO();
-
-        // --- Check if username already exists ---
-        if (userDAO.getByUsername(username) != null) {
-            request.setAttribute("error", "Username already exists! Please choose another one.");
-            request.getRequestDispatcher("/pages/register.jsp").forward(request, response);
-            return;
-        }
-
-        // --- Build User object ---
-        User newUser = new User();
-        newUser.setUsername(username);
-        newUser.setPassword(password); // You can hash this later
-        newUser.setEmail(email);
-        newUser.setFullName(fullName);
-
-        // Assign role based on selected option
         try {
-            newUser.setRole(UserRole.valueOf(roleParam));
-        } catch (IllegalArgumentException e) {
-            newUser.setRole(UserRole.STUDENT); // fallback
-        }
+            // --- Get form inputs ---
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
+            String confirmPassword = request.getParameter("confirmPassword");
+            String email = request.getParameter("email");
+            String fullName = request.getParameter("fullName");
+            String roleParam = request.getParameter("role");
 
-        newUser.setActive(true);
+            // --- Server-side validation (extra safety) ---
+            if (username == null || password == null || confirmPassword == null ||
+                email == null || fullName == null || roleParam == null ||
+                username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() ||
+                email.isEmpty() || fullName.isEmpty() || roleParam.isEmpty()) {
 
-        // --- Insert into database using your DAO ---
-        boolean success = userDAO.insert(newUser);
+                request.setAttribute("error", "All fields are required!");
+                request.getRequestDispatcher("/pages/register.jsp").forward(request, response);
+                return;
+            }
 
-        if (success) {
-            response.sendRedirect(request.getContextPath() + "/pages/login.jsp?success=registered");
-        } else {
-            request.setAttribute("error", "Registration failed due to a system error. Please try again.");
+            if (!password.equals(confirmPassword)) {
+                request.setAttribute("error", "Passwords do not match!");
+                request.getRequestDispatcher("/pages/register.jsp").forward(request, response);
+                return;
+            }
+
+            UserDAO userDAO = new UserDAO();
+
+            // --- Check if username already exists ---
+            if (userDAO.getByUsername(username) != null) {
+                request.setAttribute("error", "Username already exists! Please choose another one.");
+                request.getRequestDispatcher("/pages/register.jsp").forward(request, response);
+                return;
+            }
+
+            // --- Build User object ---
+            User newUser = new User();
+            newUser.setUsername(username);
+            newUser.setPassword(password); // You can hash this later
+            newUser.setEmail(email);
+            newUser.setFullName(fullName);
+
+            // Assign role based on selected option
+            try {
+                newUser.setRole(UserRole.valueOf(roleParam));
+            } catch (IllegalArgumentException e) {
+                newUser.setRole(UserRole.STUDENT); // fallback
+            }
+
+            newUser.setActive(true);
+
+            // --- Insert into database using your DAO ---
+            boolean success = userDAO.insert(newUser);
+
+            if (success) {
+                response.sendRedirect(request.getContextPath() + "/pages/login.jsp?success=registered");
+            } else {
+                request.setAttribute("error", "Registration failed: Could not save user to database. Please check server logs.");
+                request.getRequestDispatcher("/pages/register.jsp").forward(request, response);
+            }
+        } catch (Exception e) {
+            System.err.println("❌ CRITICAL ERROR IN REGISTERSERVLET:");
+            e.printStackTrace();
+            request.setAttribute("error", "A critical system error occurred: " + e.getMessage());
             request.getRequestDispatcher("/pages/register.jsp").forward(request, response);
         }
     }

@@ -34,7 +34,14 @@ public class DBConnection {
         // Use environment variables if available (for production deployment), 
         // otherwise fall back to database.properties (for local development)
         String url = System.getenv("DB_URL");
-        if (url == null) url = properties.getProperty("db.url");
+        if (url == null) {
+            url = properties.getProperty("db.url");
+        } else {
+            // If using Aiven/Render, ensure SSL is enabled if not already in the string
+            if (!url.contains("useSSL=")) {
+                url += (url.contains("?") ? "&" : "?") + "useSSL=true&requireSSL=true";
+            }
+        }
         
         String username = System.getenv("DB_USERNAME");
         if (username == null) username = properties.getProperty("db.username");
@@ -42,8 +49,20 @@ public class DBConnection {
         String password = System.getenv("DB_PASSWORD");
         if (password == null) password = properties.getProperty("db.password");
         
-        // Return a new connection object every time
-        return DriverManager.getConnection(url, username, password);
+        try {
+            return DriverManager.getConnection(url, username, password);
+        } catch (SQLException e) {
+            System.err.println("❌ DATABASE CONNECTION FAILURE!");
+            System.err.println("Attempted URL: " + maskUrl(url));
+            System.err.println("Error: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    // Helper to hide password in logs if it's in the URL
+    private static String maskUrl(String url) {
+        if (url == null) return "null";
+        return url.replaceAll(":([^/@:]+)@", ":****@");
     }
     
     // Step 5: Closing a connection (handled by DAOs using close() or try-with-resources)

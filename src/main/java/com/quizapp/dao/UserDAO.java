@@ -73,7 +73,8 @@ public class UserDAO implements DAO<User> {
                 return true;
             }
         } catch (SQLException e) {
-            System.err.println("Error inserting user: " + e.getMessage());
+            System.err.println("❌ Error inserting user into database!");
+            e.printStackTrace(); // This will show up in Render logs
         }
         return false;
     }
