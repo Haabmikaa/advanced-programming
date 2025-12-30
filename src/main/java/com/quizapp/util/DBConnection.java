@@ -25,9 +25,16 @@ public class DBConnection {
     
     // Step 2: Creating a connection
     public static Connection getConnection() throws SQLException {
-        String url = properties.getProperty("db.url");
-        String username = properties.getProperty("db.username");
-        String password = properties.getProperty("db.password");
+        // Use environment variables if available (for production deployment), 
+        // otherwise fall back to database.properties (for local development)
+        String url = System.getenv("DB_URL");
+        if (url == null) url = properties.getProperty("db.url");
+        
+        String username = System.getenv("DB_USERNAME");
+        if (username == null) username = properties.getProperty("db.username");
+        
+        String password = System.getenv("DB_PASSWORD");
+        if (password == null) password = properties.getProperty("db.password");
         
         // Return a new connection object every time
         return DriverManager.getConnection(url, username, password);

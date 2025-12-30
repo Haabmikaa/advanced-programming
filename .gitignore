@@ -22,6 +22,7 @@ pom.xml.versionsBackup
 
 # Database
 *.db
+src/main/resources/database.properties
 
 # OS
 .DS_Store

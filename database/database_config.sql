@@ -16,11 +16,11 @@ SHOW GRANTS FOR 'quizapp_user'@'localhost';
 4. Set appropriate isolation level
 */
 
-SET GLOBAL character_set_server = 'utf8mb4';
-SET GLOBAL collation_server = 'utf8mb4_unicode_ci';
-SET GLOBAL time_zone = '+00:00';
-SET GLOBAL sql_mode = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION';
-SET GLOBAL transaction_isolation = 'READ-COMMITTED';
+-- SET GLOBAL character_set_server = 'utf8mb4';
+-- SET GLOBAL collation_server = 'utf8mb4_unicode_ci';
+-- SET GLOBAL time_zone = '+00:00';
+-- SET GLOBAL sql_mode = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION';
+-- SET GLOBAL transaction_isolation = 'READ-COMMITTED';
 
 -- Show current configuration
 SHOW VARIABLES LIKE 'character_set%';
@@ -28,7 +28,9 @@ SHOW VARIABLES LIKE 'collation%';
 SHOW VARIABLES LIKE 'time_zone';
 SHOW VARIABLES LIKE 'sql_mode';
 SHOW VARIABLES LIKE 'transaction_isolation';
-
+-- Use these instead of GLOBAL if you want to be extra sure
+ALTER DATABASE quizdb CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+SET time_zone = '+00:00'; -- This sets it for your current session only
 -- Create backup user (for admin purposes)
 CREATE USER IF NOT EXISTS 'quizapp_backup'@'localhost' IDENTIFIED BY 'backup_password123';
 GRANT SELECT, LOCK TABLES, SHOW VIEW ON quizdb.* TO 'quizapp_backup'@'localhost';
