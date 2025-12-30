@@ -11,15 +11,21 @@ public class DBConnection {
     
     static {
         try {
-            // Step 1: Register the driver class
+            // Load local properties if they exist
             InputStream input = DBConnection.class.getClassLoader()
                 .getResourceAsStream("database.properties");
             if (input != null) {
                 properties.load(input);
-                Class.forName(properties.getProperty("db.driver"));
             }
+            
+            // Register Driver - check environment variable or properties or default
+            String driver = System.getenv("DB_DRIVER");
+            if (driver == null) driver = properties.getProperty("db.driver", "com.mysql.cj.jdbc.Driver");
+            
+            Class.forName(driver);
+            System.out.println("✅ JDBC Driver registered: " + driver);
         } catch (Exception e) {
-            System.err.println("Error registering JDBC driver: " + e.getMessage());
+            System.err.println("❌ Error registering JDBC driver: " + e.getMessage());
         }
     }
     

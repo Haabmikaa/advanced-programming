@@ -1,24 +1,30 @@
-# Database and Secrets
-*.db
+# Maven
+target/
+*.war
+*.ear
+*.jar
+
+# IDEs
+.settings/
+.project
+.classpath
+.factorypath
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+
+# Environment/Local Config
 src/main/resources/database.properties
 .env
 
-# Tomcat and Deployment
-deploy/
-*.war
-/apache-tomcat-*/
-scripts/*.log
-logs/
-
-# Build
-target/
-bin/
-*.class
-
-# IDE and OS
-.vscode/
-.idea/
-*.iml
-.DS_Store
+# OS
 Thumbs.db
-desktop.ini
+.DS_Store
+
+# Tomcat temp files
+bin/
+logs/
+temp/
+work/
