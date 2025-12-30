@@ -1,33 +1,24 @@
-# Compiled class files
+# Database and Secrets
+*.db
+src/main/resources/database.properties
+.env
+
+# Tomcat and Deployment
+deploy/
+*.war
+/apache-tomcat-*/
+scripts/*.log
+logs/
+
+# Build
+target/
+bin/
 *.class
 
-# Log files
-*.log
-
-# Package Files
-*.jar
-*.war
-*.ear
-
-# IDE files
+# IDE and OS
 .vscode/
 .idea/
 *.iml
-
-# Maven
-target/
-pom.xml.tag
-pom.xml.releaseBackup
-pom.xml.versionsBackup
-
-# Database
-*.db
-src/main/resources/database.properties
-
-# OS
 .DS_Store
 Thumbs.db
-
-# Temp files
-*.tmp
-*.temp
+desktop.ini
