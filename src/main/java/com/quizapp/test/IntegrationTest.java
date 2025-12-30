@@ -43,14 +43,14 @@ public class IntegrationTest {
             allTestsPassed &= testCompleteWorkflow();
             
             // Final Result
-            System.out.println("\n" + "=".repeat(50));
+            System.out.println("\n==================================================");
             if (allTestsPassed) {
                 System.out.println("🎉 ALL INTEGRATION TESTS PASSED SUCCESSFULLY!");
                 System.out.println("✅ System is ready for deployment");
             } else {
                 System.out.println("❌ SOME TESTS FAILED. Check above for errors.");
             }
-            System.out.println("=".repeat(50));
+            System.out.println("==================================================");
             
         } catch (Exception e) {
             System.err.println("❌ Integration test failed: " + e.getMessage());
