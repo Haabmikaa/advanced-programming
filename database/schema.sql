@@ -4,9 +4,9 @@
 -- ===========================================
 
 -- Create database
-DROP DATABASE IF EXISTS quizdb;
-CREATE DATABASE quizdb;
-USE quizdb;
+-- DROP DATABASE IF EXISTS quizdb;
+-- CREATE DATABASE quizdb;
+-- USE quizdb;
 
 -- ===========================================
 -- 1. USERS TABLE
@@ -177,19 +177,19 @@ CREATE TABLE logs (
 
 -- Insert Admin User (password: admin123)
 INSERT INTO users (username, password, email, full_name, role) VALUES
-('admin', '$2a$10$YourHashedPasswordHere', 'admin@quizapp.com', 'System Administrator', 'ADMIN');
+('admin', 'admin123', 'admin@quizapp.com', 'System Administrator', 'ADMIN');
 
 -- Insert Teacher Users (password: teacher123)
 INSERT INTO users (username, password, email, full_name, role) VALUES
-('john_teacher', '$2a$10$YourHashedPasswordHere', 'john@university.edu', 'John Smith', 'TEACHER'),
-('sarah_teacher', '$2a$10$YourHashedPasswordHere', 'sarah@university.edu', 'Sarah Johnson', 'TEACHER');
+('john_teacher', 'teacher123', 'john@university.edu', 'John Smith', 'TEACHER'),
+('sarah_teacher', 'teacher123', 'sarah@university.edu', 'Sarah Johnson', 'TEACHER');
 
 -- Insert Student Users (password: student123)
 INSERT INTO users (username, password, email, full_name, role) VALUES
-('alice_student', '$2a$10$YourHashedPasswordHere', 'alice@student.edu', 'Alice Brown', 'STUDENT'),
-('bob_student', '$2a$10$YourHashedPasswordHere', 'bob@student.edu', 'Bob Wilson', 'STUDENT'),
-('charlie_student', '$2a$10$YourHashedPasswordHere', 'charlie@student.edu', 'Charlie Davis', 'STUDENT'),
-('diana_student', '$2a$10$YourHashedPasswordHere', 'diana@student.edu', 'Diana Miller', 'STUDENT');
+('alice_student', 'student123', 'alice@student.edu', 'Alice Brown', 'STUDENT'),
+('bob_student', 'student123', 'bob@student.edu', 'Bob Wilson', 'STUDENT'),
+('charlie_student', 'student123', 'charlie@student.edu', 'Charlie Davis', 'STUDENT'),
+('diana_student', 'student123', 'diana@student.edu', 'Diana Miller', 'STUDENT');
 
 -- Insert Sample Quizzes
 INSERT INTO quizzes (title, description, created_by, category, difficulty, duration_minutes, is_published) VALUES

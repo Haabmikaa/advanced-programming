@@ -203,10 +203,9 @@
             </div>
             
             <div class="test-accounts">
-                <h4>Test Accounts:</h4>
+                <h4>Account Example:</h4>
                 <p><strong>Student:</strong> alice_student / student123</p>
                 <p><strong>Teacher:</strong> john_teacher / teacher123</p>
-                <p><strong>Admin:</strong> admin / admin123</p>
             </div>
         </div>
     </div>
