@@ -175,9 +175,8 @@ CREATE TABLE logs (
 -- 10. SAMPLE DATA INSERTION
 -- ===========================================
 
--- Insert Admin User (password: admin123)
-INSERT INTO users (username, password, email, full_name, role) VALUES
-('admin', 'adminADMIN123', 'admin@quizapp.com', 'System Administrator', 'ADMIN');
+-- Note: Admin user is now automatically created by the application on first run
+-- using environment variables ADMIN_USERNAME and ADMIN_PASSWORD.
 
 -- Insert Teacher Users (password: teacher123)
 INSERT INTO users (username, password, email, full_name, role) VALUES

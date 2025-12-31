@@ -18,6 +18,11 @@
         <session-timeout>30</session-timeout>
     </session-config>
     
+    <!-- Listeners -->
+    <listener>
+        <listener-class>com.quizapp.util.DatabaseInitializer</listener-class>
+    </listener>
+    
     <!-- Servlet Definitions -->
     <servlet>
         <servlet-name>LoginServlet</servlet-name>

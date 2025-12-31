@@ -35,6 +35,20 @@ A distributed quiz web application demonstrating advanced Java programming conce
 - **Server**: Apache Tomcat 9+
 - **Build Tool**: Maven 3.6+
 
+### 🔐 Security & Deployment (Environment Variables)
+The application uses environment variables for secure configuration, especially when deployed to cloud platforms like Render.
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `DB_URL` | JDBC Connection URL | From `database.properties` |
+| `DB_USERNAME` | Database Username | From `database.properties` |
+| `DB_PASSWORD` | Database Password | From `database.properties` |
+| `ADMIN_USERNAME` | Initial Admin Username | `-------` |
+| `ADMIN_PASSWORD` | Initial Admin Password | `---n---` |
+| `ADMIN_EMAIL` | Initial Admin Email | `admin@quizapp.com` |
+
+**Note:** The system automatically creates the first ADMIN user on startup if none exists. After that, the admin account is managed through the database.
+
 ### 📁 Project Structure
 
 
