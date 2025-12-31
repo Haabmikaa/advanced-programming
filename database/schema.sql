@@ -177,7 +177,7 @@ CREATE TABLE logs (
 
 -- Insert Admin User (password: admin123)
 INSERT INTO users (username, password, email, full_name, role) VALUES
-('admin', 'admin123', 'admin@quizapp.com', 'System Administrator', 'ADMIN');
+('admin', 'adminADMIN123', 'admin@quizapp.com', 'System Administrator', 'ADMIN');
 
 -- Insert Teacher Users (password: teacher123)
 INSERT INTO users (username, password, email, full_name, role) VALUES
