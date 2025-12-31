@@ -427,8 +427,8 @@
     const modal = document.getElementById('userModal');
     const userForm = document.getElementById('userForm');
     
-    // HARDCODED API URL to prevent context path issues
-    const API_URL = '/QuizWebApp/manageUser';
+    // DYNAMIC API URL to handle context path correctly
+    const API_URL = '${pageContext.request.contextPath}/manageUser';
 
     function showAddUserModal() {
         document.getElementById('modalTitle').textContent = 'Add New User';

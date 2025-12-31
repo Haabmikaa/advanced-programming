@@ -254,7 +254,6 @@
                 <select id="role" name="role" required>
                     <option value="">Select your role</option>
                     <option value="STUDENT">Student</option>
-                    <option value="TEACHER">Teacher</option>
                 </select>
             </div>
             
